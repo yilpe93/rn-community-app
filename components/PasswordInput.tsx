@@ -25,7 +25,7 @@ const PasswordInput = ({ submitBehavior = "blurAndSubmit" }: IProps) => {
         <InputField
           ref={ref}
           label="비밀번호"
-          placeholder="비밀번호를 입력하세요"
+          placeholder="비밀번호를 입력해주세요."
           textContentType="oneTimeCode" // Automatic Strong Password Cover Issue 처리 방법
           secureTextEntry
           submitBehavior={submitBehavior}

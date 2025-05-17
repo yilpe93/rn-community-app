@@ -1,19 +1,30 @@
 import { colors } from "@/constants";
-import React, { ForwardedRef, forwardRef } from "react";
+import React, { ForwardedRef, forwardRef, ReactNode } from "react";
 import { StyleSheet, Text, TextInput, TextInputProps, View } from "react-native";
 
 interface InputFieldProps extends TextInputProps {
   label?: string;
   variant?: "filled" | "standard" | "outlined";
   error?: string;
+  rightChild?: ReactNode;
 }
 
-function InputField({ label, variant = "filled", error, ...props }: InputFieldProps, ref?: ForwardedRef<TextInput>) {
+function InputField(
+  { label, variant = "filled", error, rightChild = null, ...props }: InputFieldProps,
+  ref?: ForwardedRef<TextInput>
+) {
   return (
     <View>
       {label && <Text style={styles.label}>{label}</Text>}
 
-      <View style={[styles.container, styles[variant], Boolean(error) && styles.inputError]}>
+      <View
+        style={[
+          styles.container,
+          styles[variant],
+          Boolean(error) && styles.inputError,
+          props.multiline && styles.multiline,
+        ]}
+      >
         <TextInput
           ref={ref}
           autoCapitalize="none" // 첫 글자 대문자 활성화/비활성화
@@ -23,6 +34,8 @@ function InputField({ label, variant = "filled", error, ...props }: InputFieldPr
           style={[styles.input]}
           {...props}
         />
+
+        {rightChild}
       </View>
 
       {Boolean(error) && <Text style={styles.error}>{error}</Text>}
@@ -61,6 +74,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginVertical: 10,
     color: colors.RED_500,
+  },
+  multiline: {
+    alignItems: "flex-start",
+    paddingVertical: 10,
+    height: 200,
   },
 });
 
