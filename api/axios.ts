@@ -10,4 +10,4 @@ const axiosInstance = axios.create({
   baseURL: Platform.OS === "ios" ? baseUrls.ios : baseUrls.android,
 });
 
-export default axiosInstance;
+export { axiosInstance, baseUrls };

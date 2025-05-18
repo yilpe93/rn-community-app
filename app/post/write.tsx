@@ -1,12 +1,14 @@
 import CustomButton from "@/components/CustomButton";
 import DescriptionInput from "@/components/DescriptionInput";
+import ImagePreviewList from "@/components/ImagePreviewList";
+import PostWriteFooter from "@/components/PostWriteFooter";
 import TitleInput from "@/components/TitleInput";
 import useCreatePost from "@/hooks/queries/useCreatePost";
 import { ImageUri } from "@/types";
 import { useNavigation } from "expo-router";
 import React, { useLayoutEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 type FormValues = {
@@ -41,14 +43,15 @@ function PostWriteScreen() {
   }, []);
 
   return (
-    <View>
+    <FormProvider {...postForm}>
       <KeyboardAwareScrollView contentContainerStyle={styles.container}>
-        <FormProvider {...postForm}>
-          <TitleInput />
-          <DescriptionInput />
-        </FormProvider>
+        <TitleInput />
+        <DescriptionInput />
+        <ImagePreviewList imageUris={postForm.watch().imageUris} />
       </KeyboardAwareScrollView>
-    </View>
+
+      <PostWriteFooter />
+    </FormProvider>
   );
 }
 

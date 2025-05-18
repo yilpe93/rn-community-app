@@ -6,6 +6,7 @@ import { deleteSecureStore, getSecureStore, saveSecureStore } from "@/utils/secu
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { router } from "expo-router";
 import { useEffect } from "react";
+import Toast from "react-native-toast-message";
 
 function useGetMe() {
   const { data, isError, isSuccess } = useQuery({
@@ -44,8 +45,11 @@ function useLogin() {
 
       router.replace("/");
     },
-    onError: () => {
-      //
+    onError: (error) => {
+      Toast.show({
+        type: "error",
+        text1: `${error}`,
+      });
     },
   });
 }
